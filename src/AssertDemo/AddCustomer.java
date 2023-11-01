@@ -7,7 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Login {
+public class AddCustomer {
 
     @Test
     public void myTest1() {
@@ -21,21 +21,26 @@ public class Login {
         txtUsername.sendKeys("admin");
 
         WebElement txtPassword = driver.findElement(By.xpath("//input[@type='password']"));
-        txtPassword.sendKeys("admin1");
+        txtPassword.sendKeys("admin");
 
         WebElement btnLogin = driver.findElement(By.xpath("//input[@value='LOG IN']"));
         btnLogin.click();
 
-        /*String expected = "https://stock.scriptinglogic.org/dashboard.php";
-        String actual = driver.getCurrentUrl();*/
+        driver.findElement(By.partialLinkText("Add Cu")).click();
 
-       /* String expected = "POSNIC - Dashboard";
-        String actual = driver.getTitle();*/
+        String name = "Sayali123";
 
-        String expected = "Dashboard";
+        driver.findElement(By.name("name")).sendKeys(name);
+        driver.findElement(By.name("address")).sendKeys("xyz");
+        driver.findElement(By.name("contact1")).sendKeys("656565");
+        driver.findElement(By.name("contact2")).sendKeys("656565");
+
+        driver.findElement(By.name("Submit")).click();
+
+        String expected = "[ "+name+" ] Customer Details Added !";
         String actual = "";
         try {
-             actual = driver.findElement(By.xpath("//a[@class='active-tab dashboard-tab']")).getText();
+             actual = driver.findElement(By.xpath("//div[@class='confirmation-box round']")).getText();
         }
         catch (Exception e)
         {
@@ -60,21 +65,26 @@ public class Login {
         txtUsername.sendKeys("admin");
 
         WebElement txtPassword = driver.findElement(By.xpath("//input[@type='password']"));
-        txtPassword.sendKeys("admin1");
+        txtPassword.sendKeys("admin");
 
         WebElement btnLogin = driver.findElement(By.xpath("//input[@value='LOG IN']"));
         btnLogin.click();
 
-        /*String expected = "https://stock.scriptinglogic.org/dashboard.php";
-        String actual = driver.getCurrentUrl();*/
+        driver.findElement(By.partialLinkText("Add Cu")).click();
 
-       /* String expected = "POSNIC - Dashboard";
-        String actual = driver.getTitle();*/
+        String name = "Sayali124";
 
-        String expected = "Wrong Username or Password";
+        driver.findElement(By.name("name")).sendKeys(name);
+        driver.findElement(By.name("address")).sendKeys("xyz");
+        driver.findElement(By.name("contact1")).sendKeys("656565");
+        driver.findElement(By.name("contact2")).sendKeys("656565");
+
+        driver.findElement(By.name("Submit")).click();
+
+        String expected = "Customer Details Added";
         String actual = "";
         try {
-            actual = driver.findElement(By.xpath("//div[contains(@class,'error')]")).getText();
+            actual = driver.findElement(By.xpath("//div[@class='confirmation-box round']")).getText();
         }
         catch (Exception e)
         {
@@ -83,7 +93,12 @@ public class Login {
         System.out.println("expected="+expected);
         System.out.println("actual="+actual);
 
-        Assert.assertEquals(actual,expected,"This is not a dashboard");
+
+       boolean result =  actual.contains(expected);
+
+       Assert.assertTrue(result,"incorrect message or user is not added");
+
+       // Assert.assertEquals(actual,expected,"This is not a dashboard");
     }
 
 }
